@@ -3,7 +3,7 @@ import { View } from 'react-native';
 
 interface Props {
   isHorizontal?: boolean;
-  size: number;
+  size?: number;
 }
 
 const Separator = ({ isHorizontal, size }: Props) => (
@@ -11,6 +11,7 @@ const Separator = ({ isHorizontal, size }: Props) => (
 );
 
 Separator.defaultProps = {
+  isHorizontal: false,
   size: 10,
 };
 

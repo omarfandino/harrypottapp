@@ -5,4 +5,5 @@ module.exports = {
   jsxBracketSameLine: false,
   bracketSpacing: true,
   printWidth: 100,
+  endOfLine: 'auto',
 };
