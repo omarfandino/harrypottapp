@@ -2,10 +2,7 @@ import React from 'react';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { RouteProp } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-import { HistoryScreen } from '../screens';
-import HomeStack from './HomeStack';
-
+import { BooksListScreen, CharactersListScreen, HistoryScreen } from '../screens';
 import { colors } from '../utils/theme';
 
 type Route = RouteProp<Record<string, object | undefined>, string>;
@@ -15,10 +12,13 @@ const Tab = createBottomTabNavigator();
 const getIconName = (routeName: string) => {
   let iconName = '';
   switch (routeName) {
-    case 'HomeTab':
+    case 'BooksList':
       iconName = 'home';
       break;
-    case 'HistoryTab':
+    case 'CharactersList':
+      iconName = 'history';
+      break;
+    case 'History':
       iconName = 'history';
       break;
     default:
@@ -47,8 +47,13 @@ const navigatorScreenOptions = ({ route }: { route: Route }) => ({
 const TabNavigator = () => {
   return (
     <Tab.Navigator screenOptions={navigatorScreenOptions}>
-      <Tab.Screen name="HomeTab" component={HomeStack} options={{ title: 'Home' }} />
-      <Tab.Screen name="HistoryTab" component={HistoryScreen} options={{ title: 'History' }} />
+      <Tab.Screen name="BooksList" component={BooksListScreen} options={{ title: 'Books' }} />
+      <Tab.Screen
+        name="CharactersList"
+        component={CharactersListScreen}
+        options={{ title: 'Characters' }}
+      />
+      <Tab.Screen name="History" component={HistoryScreen} options={{ title: 'History' }} />
     </Tab.Navigator>
   );
 };
