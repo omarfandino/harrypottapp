@@ -27,7 +27,6 @@ const ListItem = ({
     >
       <View style={styles.listItemContainer}>
         <View style={styles.coverBooksContainer}>
-          {/* <ImageBackground source={image} style={styles.coverBooks} /> */}
           <Image source={image} style={styles.coverBooks} />
         </View>
         <View style={styles.textContainer}>
