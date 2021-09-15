@@ -9,37 +9,49 @@ type Route = RouteProp<Record<string, object | undefined>, string>;
 
 const Tab = createBottomTabNavigator();
 
-const getIconName = (routeName: string) => {
-  let iconName = '';
+const getIconStyle = (routeName: string) => {
+  let iconStyle = {
+    iconName: 'help-outline',
+    iconSize: 35,
+  };
   switch (routeName) {
     case 'BooksList':
-      iconName = 'home';
+      iconStyle.iconName = 'menu-book';
       break;
     case 'CharactersList':
-      iconName = 'history';
+      iconStyle.iconName = 'badge';
       break;
     case 'History':
-      iconName = 'history';
+      iconStyle.iconName = 'history';
+      iconStyle.iconSize = 37;
       break;
     default:
-      iconName = 'help-outline';
       break;
   }
 
-  return iconName;
+  return iconStyle;
 };
 
 const navigatorScreenOptions = ({ route }: { route: Route }) => ({
-  tabBarIcon: ({ focused, color, size }: { focused: boolean; color: string; size: number }) => {
-    const iconName = getIconName(route.name);
-    const iconSize = focused ? size * 1.2 : size;
+  tabBarIcon: ({ focused, color }: { focused: boolean; color: string }) => {
+    const { iconName, iconSize: sizeIcon } = getIconStyle(route.name);
+    const iconSize = focused ? sizeIcon * 1.15 : sizeIcon;
     return <MaterialIcon name={iconName} size={iconSize} color={color} />;
   },
   tabBarAllowFontScaling: false,
-  tabBarActiveTintColor: colors.mainOrange,
-  tabBarInactiveTintColor: colors.lightBlue,
+  tabBarActiveTintColor: colors.white,
+  tabBarInactiveTintColor: colors.yellow,
   tabBarLabelStyle: {
-    fontSize: 12,
+    fontSize: 13,
+  },
+  tabBarStyle: {
+    backgroundColor: colors.wine,
+    height: 68,
+    paddingBottom: 6,
+    paddingTop: 6,
+  },
+  tabBarIconStyle: {
+    padding: 0,
   },
   headerShown: false,
 });
