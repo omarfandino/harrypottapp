@@ -1,6 +1,14 @@
 import React, { useCallback, useState } from 'react';
-import { ActivityIndicator, FlatList, Image, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { useNetInfo } from '@react-native-community/netinfo';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import { DefaultButton, Header, Separator, Typography } from '../../components';
 import styles from './styles';
@@ -18,7 +26,11 @@ const ListItem = ({
   title: string;
   book_covers: Cover[];
 }) => {
-  const image: any = { uri: book_covers[0].URL };
+  const bookCover =
+    book_covers.length && book_covers[0].URL
+      ? book_covers[0].URL
+      : require('../../assets/images/no-image.png');
+  const image: any = { uri: bookCover };
 
   return (
     <TouchableOpacity
@@ -27,7 +39,6 @@ const ListItem = ({
     >
       <View style={styles.listItemContainer}>
         <View style={styles.coverBooksContainer}>
-          {/* <ImageBackground source={image} style={styles.coverBooks} /> */}
           <Image source={image} style={styles.coverBooks} />
         </View>
         <View style={styles.textContainer}>
@@ -69,7 +80,7 @@ const BooksListScreen = () => {
       <>
         <Header showBackButton={false} title="Home Screen" />
         <View style={styles.wholeScreenCenter}>
-          <ActivityIndicator size="large" color={colors.mainOrange} />
+          <ActivityIndicator size="large" color={colors.wine} />
         </View>
       </>
     );
@@ -89,10 +100,20 @@ const BooksListScreen = () => {
     <>
       <Header showBackButton={false} />
       <Separator size={20} />
+      <View style={styles.searchSection}>
+        <MaterialIcon name="search" size={30} color={colors.wine} style={styles.iconSearch} />
+        <TextInput
+          style={styles.inputSearch}
+          placeholder="Search a book"
+          underlineColorAndroid="transparent"
+          placeholderTextColor={colors.wine}
+        />
+      </View>
+      <Separator size={10} />
       <Typography align="center" color={colors.wine} size={25} variant="bold">
         BOOKS
       </Typography>
-      <Separator size={20} />
+      <Separator size={15} />
       <View style={styles.mainContainer}>
         <FlatList
           keyExtractor={flatlistKeyExtractor}
