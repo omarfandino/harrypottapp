@@ -55,7 +55,7 @@ const HomeScreen = () => {
       <>
         <Header showBackButton={false} title="Home Screen" />
         <View style={styles.wholeScreenCenter}>
-          <ActivityIndicator size="large" color={colors.mainOrange} />
+          <ActivityIndicator size="large" color={colors.wine} />
         </View>
       </>
     );
