@@ -1,12 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import {
-  ActivityIndicator,
-  FlatList,
-  ImageBackground,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ActivityIndicator, FlatList, ImageBackground, TouchableOpacity, View } from 'react-native';
 import { useNetInfo } from '@react-native-community/netinfo';
 
 import { DefaultButton, Header, Separator, Typography } from '../../components';
@@ -24,25 +17,23 @@ const ListItem = ({
   id: number;
   title: string;
   book_covers: Cover[];
-}) => (
-  <TouchableOpacity
-    onPress={() => goToScreen('BookDetails', { id, title })}
-    style={styles.listItemContainerShadow}
-  >
-    <View style={styles.listItemContainer}>
-      <ImageBackground
-        source={/*book_covers[0].URL.toString() ||*/ require('../../assets/images/no-image.png')}
-        resizeMode="cover"
-        style={styles.coverBooks}
-      >
-        <Text>{book_covers[0].URL.toString()}</Text>
-      </ImageBackground>
-      <Typography numberOfLines={2} align="center">
-        {title}
-      </Typography>
-    </View>
-  </TouchableOpacity>
-);
+}) => {
+  const image: any = { uri: book_covers[0].URL };
+
+  return (
+    <TouchableOpacity
+      onPress={() => goToScreen('BookDetails', { id, title })}
+      style={styles.listItemContainerShadow}
+    >
+      <View style={styles.listItemContainer}>
+        <ImageBackground source={image} resizeMode="cover" style={styles.coverBooks} />
+        <Typography numberOfLines={2} align="center">
+          {title}
+        </Typography>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 const flatlistKeyExtractor = (item: Book) => `${item.id}`;
 
