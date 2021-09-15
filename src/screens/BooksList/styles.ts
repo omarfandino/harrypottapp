@@ -5,10 +5,20 @@ const styles = StyleSheet.create({
   columnWrapperStyle: {
     justifyContent: 'space-between',
   },
-  coverBooks: {
+  coverBooksContainer: {
     borderRadius: 25,
-    height: 150,
+    height: 165,
     marginBottom: 15,
+    overflow: 'hidden',
+    position: 'relative',
+    width: '100%',
+  },
+  coverBooks: {
+    height: '100%',
+    left: 0,
+    marginBottom: 15,
+    position: 'absolute',
+    top: 0,
     width: '100%',
   },
   flatList: {
@@ -34,8 +44,8 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     borderRadius: 25,
     borderWidth: 1,
+    elevation: 5,
     justifyContent: 'center',
-    width: '100%',
     paddingBottom: 15,
   },
   listItemContainerShadow: {
@@ -48,6 +58,9 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
     width: `${50 - 2}%`,
     elevation: 2,
+  },
+  textContainer: {
+    paddingHorizontal: '6%',
   },
   wholeScreenCenter: {
     alignItems: 'center',

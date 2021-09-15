@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { ActivityIndicator, FlatList, ImageBackground, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, FlatList, Image, TouchableOpacity, View } from 'react-native';
 import { useNetInfo } from '@react-native-community/netinfo';
 
 import { DefaultButton, Header, Separator, Typography } from '../../components';
@@ -26,10 +26,15 @@ const ListItem = ({
       style={styles.listItemContainerShadow}
     >
       <View style={styles.listItemContainer}>
-        <ImageBackground source={image} resizeMode="cover" style={styles.coverBooks} />
-        <Typography numberOfLines={2} align="center">
-          {title}
-        </Typography>
+        <View style={styles.coverBooksContainer}>
+          {/* <ImageBackground source={image} style={styles.coverBooks} /> */}
+          <Image source={image} style={styles.coverBooks} />
+        </View>
+        <View style={styles.textContainer}>
+          <Typography numberOfLines={2} align="center">
+            {title}
+          </Typography>
+        </View>
       </View>
     </TouchableOpacity>
   );
