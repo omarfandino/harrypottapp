@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, View } from 'react-native';
+import { ActivityIndicator, Alert, Image, View } from 'react-native';
 
-import { Header, Separator, Typography } from '../../components';
+import { Header, Typography } from '../../components';
 import { getCharacterById } from '../../services';
 
 import styles from './styles';
 import { colors } from '../../utils/theme';
+//import { placeholder } from '../../assets/images/no-image.png';
 
 // @ts-ignore
 const CharacterDetailsScreen = ({ route }) => {
@@ -19,7 +20,7 @@ const CharacterDetailsScreen = ({ route }) => {
     try {
       const { success, data } = await getCharacterById(id);
       if (success) {
-        setCharacter(data);
+        setCharacter(data[0]);
       } else {
         Alert.alert(`Error getting the details of the book: ${title}`);
       }
@@ -50,9 +51,39 @@ const CharacterDetailsScreen = ({ route }) => {
     <>
       <Header title={title} />
       <View style={styles.mainContainer}>
-        <Typography size={18}>Character Detail Screen</Typography>
-        <Separator />
-        <Typography>{JSON.stringify(character, null, 2)}</Typography>
+        <View style={styles.titleContainer}>
+          <View style={styles.typoContainer}>
+            <Typography
+              size={23}
+              color={colors.wine}
+              align={'center'}
+              numberOfLines={2}
+              variant={'bold'}
+            >
+              {character?.name}
+            </Typography>
+          </View>
+        </View>
+        <View style={styles.contentContainer}>
+          <View style={styles.coverBooksContainer}>
+            <Image source={require('../../assets/images/no-image.png')} style={styles.coverBooks} />
+          </View>
+          <View style={styles.infoContainer}>
+            <Typography>Author</Typography>
+            <Typography>Publish date</Typography>
+            <Typography>Plot take-place years</Typography>
+          </View>
+        </View>
+        <View style={styles.descriptionContainer}>
+          <Typography>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste itaque tempore
+            perferendis magnam explicabo. Itaque voluptates accusantium doloremque optio veniam,
+            quae excepturi amet facilis at libero voluptas tempore, iure rem.
+          </Typography>
+        </View>
+        <Typography size={15} variant={'bold'} align={'left'}>
+          Other Books
+        </Typography>
       </View>
     </>
   );
