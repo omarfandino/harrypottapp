@@ -3,3 +3,4 @@ export { default as BooksListScreen } from './BooksList';
 export { default as CharactersListScreen } from './CharactersList';
 export { default as ExperimentalScreen } from './Experimental';
 export { default as HistoryScreen } from './History';
+export { default as CharacterDetailsScreen } from './CharacterDetails';
