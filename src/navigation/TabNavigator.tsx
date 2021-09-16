@@ -40,6 +40,7 @@ const navigatorScreenOptions = ({ route }: { route: Route }) => ({
   },
   tabBarAllowFontScaling: false,
   tabBarActiveTintColor: colors.white,
+  tabBarHideOnKeyboard: true,
   tabBarInactiveTintColor: colors.yellow,
   tabBarLabelStyle: {
     fontSize: 13,
