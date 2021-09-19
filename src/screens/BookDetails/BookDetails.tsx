@@ -69,7 +69,7 @@ const BookDetailsScreen = ({ route }) => {
       <>
         <Header title={title} />
         <View style={styles.wholeScreenCenter}>
-          <ActivityIndicator size="large" color={colors.mainOrange} />
+          <ActivityIndicator size="large" color={colors.wine} />
         </View>
       </>
     );

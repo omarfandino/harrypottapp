@@ -33,6 +33,20 @@ const styles = StyleSheet.create({
     padding: 20,
     overflow: 'hidden',
   },
+  iconSearch: {
+    padding: 8,
+    paddingLeft: 15,
+  },
+  inputSearch: {
+    color: colors.wine,
+    flex: 1,
+    fontSize: 15,
+    fontWeight: 'bold',
+    paddingBottom: 10,
+    paddingLeft: 0,
+    paddingRight: 10,
+    paddingTop: 10,
+  },
   mainContainer: {
     alignItems: 'center',
     flex: 1,
@@ -58,6 +72,14 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
     width: `${50 - 2}%`,
     elevation: 2,
+  },
+  searchSection: {
+    alignItems: 'center',
+    backgroundColor: colors.yellow,
+    borderRadius: 200,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginHorizontal: 20,
   },
   textContainer: {
     paddingHorizontal: '6%',
