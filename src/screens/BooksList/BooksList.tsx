@@ -16,6 +16,7 @@ import styles from './styles';
 import { goToScreen } from '../../navigation/controls';
 import { colors } from '../../utils/theme';
 import useBooksData from './hooks/useBooksData';
+import useAsyncSearchHistory from '../../utils/hooks/useAsyncSearchHistory';
 
 const ListItem = ({
   id,
@@ -60,6 +61,8 @@ const renderFlatlistItem = ({ item }: { item: Book }) => (
 const BooksListScreen = () => {
   const [refreshFlag, setRefreshFlag] = useState<boolean>(false);
   const { books, loading, errorOccurred } = useBooksData(refreshFlag);
+
+  const { bouncedHandleOnChangeText } = useAsyncSearchHistory({ type: 'book' });
 
   const netInfo = useNetInfo();
 
@@ -107,6 +110,9 @@ const BooksListScreen = () => {
           placeholder="Search a book"
           underlineColorAndroid="transparent"
           placeholderTextColor={colors.wine}
+          onChangeText={(text) => {
+            bouncedHandleOnChangeText(text);
+          }}
         />
       </View>
       <Separator size={10} />
