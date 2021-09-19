@@ -7,6 +7,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
   },
+  flatList: {
+    width: '100%',
+  },
 });
 
 export default styles;
