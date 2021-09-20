@@ -9,6 +9,7 @@ import styles from './styles';
 import { goToScreen } from '../../navigation/controls';
 import { colors } from '../../utils/theme';
 import useCharactersData from './hooks/useCharactersData';
+import useAsyncSearchHistory from '../../utils/hooks/useAsyncSearchHistory';
 
 const ListItem = ({ id, name, house }: { id: number; name: string; house: string }) => (
   <TouchableOpacity
@@ -37,6 +38,8 @@ const renderFlatlistItem = ({ item }: { item: Character }) => (
 const CharactersListScreen = () => {
   const [refreshFlag, setRefreshFlag] = useState<boolean>(false);
   const { characters, loading, errorOccurred } = useCharactersData(refreshFlag);
+
+  const { bouncedHandleOnChangeText } = useAsyncSearchHistory({ type: 'character' });
 
   const netInfo = useNetInfo();
 
@@ -84,6 +87,9 @@ const CharactersListScreen = () => {
           placeholder="Search a character"
           underlineColorAndroid="transparent"
           placeholderTextColor={colors.wine}
+          onChangeText={(text) => {
+            bouncedHandleOnChangeText(text);
+          }}
         />
       </View>
       <Separator size={10} />
