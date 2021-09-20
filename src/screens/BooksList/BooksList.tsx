@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -59,6 +59,8 @@ const renderFlatlistItem = ({ item }: { item: Book }) => (
 );
 
 const BooksListScreen = () => {
+  const [search, setSearch] = useState('');
+  const [booksList, setBooksList] = useState<Book[]>([]);
   const [refreshFlag, setRefreshFlag] = useState<boolean>(false);
   const { books, loading, errorOccurred } = useBooksData(refreshFlag);
 
@@ -69,6 +71,25 @@ const BooksListScreen = () => {
   const toggleRefreshFlag = useCallback(() => {
     setRefreshFlag(!refreshFlag);
   }, [refreshFlag]);
+
+  const handleSearch = (text: string) => {
+    setSearch(text);
+  };
+
+  const filteredArray = () => {
+    if (search.length === 0) {
+      return books;
+    }
+    return books.filter((book) => book.title.toLowerCase().includes(search));
+  };
+  useEffect(() => {
+    const filteredArrayData = filteredArray();
+    setBooksList(filteredArrayData);
+  }, [search]);
+
+  useEffect(() => {
+    setBooksList(books);
+  }, [books]);
 
   if (!netInfo.isConnected) {
     return (
@@ -110,8 +131,10 @@ const BooksListScreen = () => {
           placeholder="Search a book"
           underlineColorAndroid="transparent"
           placeholderTextColor={colors.wine}
+          value={search}
           onChangeText={(text) => {
             bouncedHandleOnChangeText(text);
+            handleSearch(text);
           }}
         />
       </View>
@@ -125,7 +148,7 @@ const BooksListScreen = () => {
           keyExtractor={flatlistKeyExtractor}
           refreshing={loading}
           onRefresh={toggleRefreshFlag}
-          data={books}
+          data={booksList}
           renderItem={renderFlatlistItem}
           ItemSeparatorComponent={Separator}
           contentContainerStyle={styles.flatlistContent}
