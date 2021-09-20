@@ -11,7 +11,6 @@ import { colors } from '../../utils/theme';
 // @ts-ignore
 const CharacterDetailsScreen = ({ route }) => {
   const { id, title } = route.params;
-
   const [character, setCharacter] = useState<Character | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -69,9 +68,18 @@ const CharacterDetailsScreen = ({ route }) => {
             <Image source={require('../../assets/images/no-image.png')} style={styles.coverBooks} />
           </View>
           <View style={styles.infoContainer}>
-            <Typography>Author</Typography>
-            <Typography>Publish date</Typography>
-            <Typography>Plot take-place years</Typography>
+            <View style={styles.textContainer}>
+              <Typography variant={'bold'}>Birth : </Typography>
+              <Typography>{character?.birth}</Typography>
+            </View>
+            <View style={styles.textContainer}>
+              <Typography variant={'bold'}>Gender :</Typography>
+              <Typography> {character?.gender}</Typography>
+            </View>
+            <View style={styles.textContainer}>
+              <Typography variant={'bold'}>House : </Typography>
+              <Typography>{character?.house}</Typography>
+            </View>
           </View>
         </View>
         <View style={styles.descriptionContainer}>
@@ -81,9 +89,6 @@ const CharacterDetailsScreen = ({ route }) => {
             quae excepturi amet facilis at libero voluptas tempore, iure rem.
           </Typography>
         </View>
-        <Typography size={15} variant={'bold'} align={'left'}>
-          Other Books
-        </Typography>
       </View>
     </>
   );

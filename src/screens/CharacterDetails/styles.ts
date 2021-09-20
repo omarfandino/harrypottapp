@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   },
   coverBooks: {
     borderRadius: 1,
+    width: '100%',
   },
   descriptionContainer: {
     backgroundColor: colors.white,
@@ -21,12 +22,17 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   infoContainer: {
-    width: '40%',
+    width: '50%',
   },
   mainContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
+  },
+  textContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    paddingBottom: 10,
   },
   titleContainer: {
     backgroundColor: colors.yellow,
