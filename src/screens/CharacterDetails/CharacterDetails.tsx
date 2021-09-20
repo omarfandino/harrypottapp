@@ -38,7 +38,7 @@ const CharacterDetailsScreen = ({ route }) => {
   if (loading) {
     return (
       <>
-        <Header title={title} />
+        <Header />
         <View style={styles.wholeScreenCenter}>
           <ActivityIndicator size="large" color={colors.wine} />
         </View>
