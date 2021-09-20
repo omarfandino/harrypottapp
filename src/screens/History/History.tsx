@@ -64,17 +64,18 @@ const HistoryScreen = () => {
         <Separator size={15} />
         <View style={styles.mainContainer}>
           <FlatList
-            // keyExtractor={flatlistKeyExtractor}
             data={SearchHistoryItems}
             renderItem={renderFlatlistItem}
             ItemSeparatorComponent={Separator}
-            // contentContainerStyle={styles.flatlistContent}
             style={styles.flatList}
-            // columnWrapperStyle={styles.columnWrapperStyle}
           />
         </View>
         <Separator size={15} />
-        <DefaultButton text="Reset Search History" onPress={resetSearchHistory} />
+        <DefaultButton
+          text="Reset Search History"
+          onPress={resetSearchHistory}
+          additionalStyle={styles.button}
+        />
         <Separator size={15} />
       </View>
     </>

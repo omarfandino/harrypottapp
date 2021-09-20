@@ -36,7 +36,7 @@ function useAsyncSearchHistory({ type = 'book' }: Props) {
   };
 
   // Debounce function to call it every certain time
-  const bouncedHandleOnChangeText = debounce(handleOnChangeText, 500);
+  const bouncedHandleOnChangeText = debounce(handleOnChangeText, 1500);
 
   return { bouncedHandleOnChangeText };
 }
