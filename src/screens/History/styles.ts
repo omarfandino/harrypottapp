@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { colors } from '../../utils/theme';
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -9,6 +10,9 @@ const styles = StyleSheet.create({
   },
   flatList: {
     width: '100%',
+  },
+  button: {
+    backgroundColor: colors.wine,
   },
 });
 
