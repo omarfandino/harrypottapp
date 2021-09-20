@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, TextInput, TouchableOpacity, View } from 'react-native';
 import { useNetInfo } from '@react-native-community/netinfo';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -36,6 +36,8 @@ const renderFlatlistItem = ({ item }: { item: Character }) => (
 );
 
 const CharactersListScreen = () => {
+  const [search, setSearch] = useState('');
+  const [charactersList, setCharactersList] = useState<Character[]>([]);
   const [refreshFlag, setRefreshFlag] = useState<boolean>(false);
   const { characters, loading, errorOccurred } = useCharactersData(refreshFlag);
 
@@ -46,6 +48,25 @@ const CharactersListScreen = () => {
   const toggleRefreshFlag = useCallback(() => {
     setRefreshFlag(!refreshFlag);
   }, [refreshFlag]);
+
+  const handleSearch = (text: string) => {
+    setSearch(text);
+  };
+
+  const filteredArray = () => {
+    if (search.length === 0) {
+      return characters;
+    }
+    return characters.filter((character) => character.name.toLowerCase().includes(search));
+  };
+  useEffect(() => {
+    const filteredArrayData = filteredArray();
+    setCharactersList(filteredArrayData);
+  }, [search]);
+
+  useEffect(() => {
+    setCharactersList(characters);
+  }, [characters]);
 
   if (!netInfo.isConnected) {
     return (
@@ -87,8 +108,10 @@ const CharactersListScreen = () => {
           placeholder="Search a character"
           underlineColorAndroid="transparent"
           placeholderTextColor={colors.wine}
+          value={search}
           onChangeText={(text) => {
             bouncedHandleOnChangeText(text);
+            handleSearch(text);
           }}
         />
       </View>
@@ -102,7 +125,7 @@ const CharactersListScreen = () => {
           keyExtractor={flatlistKeyExtractor}
           refreshing={loading}
           onRefresh={toggleRefreshFlag}
-          data={characters}
+          data={charactersList}
           renderItem={renderFlatlistItem}
           ItemSeparatorComponent={Separator}
           contentContainerStyle={styles.flatlistContent}
