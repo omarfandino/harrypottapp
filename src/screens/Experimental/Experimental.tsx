@@ -18,8 +18,6 @@ const ExperimentalScreen = () => {
     console.log('Inside useEffect');
   }, []);
 
-  console.log('Inside Experimental');
-
   const showModal = () => {
     setModalVisible(true);
   };
