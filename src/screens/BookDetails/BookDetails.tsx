@@ -1,18 +1,63 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
-import { Header, Separator, Typography } from '../../components';
+import { Header, Typography } from '../../components';
 import { getBookById } from '../../services';
+
+import useBooksData from '../BooksList/hooks/useBooksData';
 
 import styles from './styles';
 import { colors } from '../../utils/theme';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { goToScreen } from '../../navigation/controls';
+
+const ListItem = ({
+  id,
+  name,
+  book_covers,
+}: {
+  id: number;
+  name: string;
+  book_covers: Cover[];
+}) => {
+  const bookCover =
+    book_covers.length && book_covers[0].URL
+      ? book_covers[0].URL
+      : require('../../assets/images/no-image.png');
+
+  const image: any = { uri: bookCover };
+
+  return (
+    <TouchableOpacity
+      onPress={() => goToScreen('BookDetails', { id, name })}
+      style={styles.listItemContainerShadow}
+    >
+      <View style={styles.listItemContainer}>
+        <Image source={image} style={styles.coverBooksMini} />
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const flatlistKeyExtractor = (item: Book) => `${item.id}`;
+
+const renderFlatlistItem = ({ item }: { item: Book }) => (
+  <ListItem id={item.id} name={item.title} book_covers={item.book_covers} />
+);
 
 // @ts-ignore
 const BookDetailsScreen = ({ route }) => {
   const { id, title } = route.params;
 
-  const [book, setBook] = useState<Book | null>(null);
+  const { books } = useBooksData();
+  const [book, setBook] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   const getBooksData = async () => {
@@ -36,34 +81,6 @@ const BookDetailsScreen = ({ route }) => {
     getBooksData();
   }, []);
 
-  useEffect(() => {
-    console.log('starting');
-    const asyncFunction = async () => {
-      try {
-        console.log('getting');
-        const books = await AsyncStorage.getItem('storagedBooks');
-        console.log(books);
-        if (books && books.length) {
-          console.log('there are books');
-          let fromAsyncToArray = books.split(',');
-          console.log(fromAsyncToArray);
-          let expression = [`${id}`, ...fromAsyncToArray];
-          expression = [...new Set(expression)];
-          expression.join(',');
-          console.log('adding ', expression);
-          await AsyncStorage.setItem('storagedBooks', `${expression}`);
-        } else {
-          // First time
-          console.log(`no books, adding ${id}`);
-          await AsyncStorage.setItem('storagedBooks', `${id}`);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    asyncFunction();
-  }, [id]);
-
   if (loading) {
     return (
       <>
@@ -75,14 +92,75 @@ const BookDetailsScreen = ({ route }) => {
     );
   }
 
+  const bookCover =
+    book[0].book_covers.length && book[0].book_covers[0].URL
+      ? book[0].book_covers[0].URL
+      : require('../../assets/images/no-image.png');
+  const image: any = { uri: bookCover };
+
   return (
     <>
-      <Header title={title} />
-      <View style={styles.mainContainer}>
-        <Typography size={18}>Book Detail Screen</Typography>
-        <Separator />
-        <Typography>{JSON.stringify(book, null, 2)}</Typography>
-      </View>
+      <Header />
+      <ScrollView>
+        <View style={styles.mainContainer}>
+          <View style={styles.titleContainer}>
+            <View style={styles.typoContainer}>
+              <Typography
+                size={23}
+                color={colors.wine}
+                align={'center'}
+                numberOfLines={2}
+                variant={'bold'}
+              >
+                {book[0]?.title}
+              </Typography>
+            </View>
+          </View>
+          <View style={styles.contentContainer}>
+            <View style={styles.coverBooksContainer}>
+              <Image source={image} style={styles.coverBooks} />
+            </View>
+            <View style={styles.infoContainer}>
+              <View style={styles.textContainer}>
+                <Typography variant={'bold'}>Author : </Typography>
+                <Typography>{book[0]?.author}</Typography>
+              </View>
+              <View style={styles.textContainer}>
+                <Typography variant={'bold'}>Publish Date :</Typography>
+                <Typography> {book[0]?.publish_date[0].UK}</Typography>
+              </View>
+              <View style={styles.textContainer}>
+                <Typography variant={'bold'}>Plot Take-place years : </Typography>
+                {book[0].plot_take_place_years.map((year: string) => (
+                  <Typography>{year} </Typography>
+                ))}
+              </View>
+            </View>
+          </View>
+          <View style={styles.descriptionContainer}>
+            <Typography>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste itaque tempore
+              perferendis magnam explicabo. Itaque voluptates accusantium doloremque optio veniam,
+              quae excepturi amet facilis at libero voluptas tempore, iure rem.
+            </Typography>
+          </View>
+          <View style={styles.footerContainer}>
+            <Typography size={15} variant={'bold'} align={'right'}>
+              Other Books
+            </Typography>
+          </View>
+          <View style={styles.mainContainer}>
+            <FlatList
+              keyExtractor={flatlistKeyExtractor}
+              data={books}
+              renderItem={renderFlatlistItem}
+              contentContainerStyle={styles.flatlistContent}
+              style={styles.flatList}
+              horizontal={true}
+            />
+          </View>
+        </View>
+      </ScrollView>
     </>
   );
 };

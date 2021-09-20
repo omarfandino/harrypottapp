@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { getAllBooks } from '../../../services';
 
-function useBooksData(refreshFlag: boolean) {
+function useBooksData(refreshFlag?: boolean) {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [errorOccurred, setErrorOccurred] = useState<boolean>(false);
